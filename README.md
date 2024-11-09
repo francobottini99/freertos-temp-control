@@ -1,15 +1,15 @@
-# Sistema de medicion de temperatura implementado en sistema operativo de tiempo real
+# Temperature Measurement System Implemented in Real-Time Operating System
 
-Aplicación de un sistema operativo de tiempo real en un sistema embebido. Simulación de un sistema de control de temperatura con un filtro pasa bajos. Comunicación UART con una computadora para visualizar el estado del sistema y cambiar el coeficiente de filtrado.
+Application of a real-time operating system in an embedded system. Simulation of a temperature control system with a low-pass filter. UART communication with a computer to view the system's status and change the filtering coefficient.
 
-El sistema embebido utilizado es un microcontrolador *Stellaris LM3S811*. El sistema operativo utilizado es FreeRTOS. El sistema fue testeado a través de la herramienta de simulación QEMU. No se realizó el port a la placa real.
+The embedded system used is a *Stellaris LM3S811* microcontroller. The operating system used is FreeRTOS. The system was tested through the QEMU simulation tool. The port to the real board was not done.
 
-### Autores:
+### Authors:
 - **Bottini, Franco Nicolas**
 
-### ¿ Como Clonar ?
+### How to Clone?
 
-Para compilar el proyecto, una vez clonado el repositorio, basta con ejecutar el comando `make` en la carpeta raíz del proyecto.
+To compile the project, once the repository is cloned, simply run the `make` command in the root folder of the project.
 
 ```bash
 $ git clone https://github.com/francobottini99/SIS-TEMPRTOS-2024.git
@@ -17,49 +17,49 @@ $ cd SIS-TEMPRTOS-2024
 $ make
 ```
 
-## Resumen
+## Summary
 
-El sistema embebido cuenta con cinco tareas: una tarea de lectura de temperatura, una tarea de filtrado de temperatura, una tarea que se encarga de graficar la temperatura, una tarea que se encarga de mostrar el estado del sistema y una tarea que se encarga de recibir comandos por UART.
+The embedded system has five tasks: a temperature reading task, a temperature filtering task, a task for plotting the temperature, a task for displaying the system status, and a task for receiving commands via UART.
 
-La comunicación entre las tareas de lectura y filtrado de temperatura, y las tareas de filtrado y grafica de temperatura se realiza a través de colas de mensajes.
+The communication between the temperature reading and filtering tasks, and the filtering and plotting tasks is done via message queues.
 
-Se ajusto la prioridad de las tareas de manera tal que la tarea de lectura de temperatura tenga la mayor prioridad, seguida por la tarea de filtrado de temperatura, la tarea de graficado de temperatura, la tarea de visualización de estado y por último la tarea de recepción de comandos por UART.
+The priority of the tasks was adjusted so that the temperature reading task has the highest priority, followed by the temperature filtering task, the temperature plotting task, the system status display task, and finally the UART command receiving task.
 
-Finalmente se asigno un *stack* a cada tarea de acuerdo a la cantidad de memoria que se estima que va a utilizar cada una, sumado a un margen de seguridad.
+A *stack* was assigned to each task based on the estimated memory usage for each, with an added safety margin.
 
-## Ejecución
+## Execution
 
-Para ejecutar el programa utilizando QEMU, se suministra un script de ejecución `emulate.sh`.
+To run the program using QEMU, an execution script `emulate.sh` is provided.
 
 ```bash
 $ ./emulate.sh
 ```
 
-Si se desea modificar el coeficiente de filtrado por defecto con el que se ejecuta el programa, se puede ejecutar el script con el valor deseado como argumento.
+If you wish to modify the default filtering coefficient with which the program runs, you can execute the script with the desired value as an argument.
 
 ```bash
-$ ./emulate.sh 15 # Coeficiente de filtrado = 15
+$ ./emulate.sh 15 # Filtering coefficient = 15
 ```
 
 > [!WARNING]
-> El coficiente de filtrado debe ser un número entero mayor que 0. Por defecto, el coeficiente de filtrado es 5. Si se ingresa un valor no válido, se utilizará el valor por defecto.
+> The filtering coefficient must be an integer greater than 0. By default, the filtering coefficient is 5. If an invalid value is entered, the default value will be used.
 
 > [!NOTE]
-> Se necesita tener instalado QEMU para poder ejecutar el script.
+> QEMU must be installed to run the script.
 
-## Visualización
+## Visualization
 
-Al ejecutar el programa, se abrirá una ventana de QEMU con la simulación del sistema embebido. En la ventana de QEMU se puede visualizar el gráfico resultante del proceso de simulación y filtrado de la temperatura.
+When the program is executed, a QEMU window will open with the simulation of the embedded system. In the QEMU window, you can view the resulting graph from the temperature simulation and filtering process.
 
 <p align="center">
-  <img src="Imgs/Graph.png" alt="Grafico">
+  <img src="Imgs/Graph.png" alt="Graph">
 </p>
 
-Además, se va imprimiendo en la terminal el estado del sistema. Se puede visualizar la carga de CPU, el *stack* disponible y el número de *ticks* ocupados por el cada tarea en ejecución.
+Additionally, the system's status is printed in the terminal. You can see the CPU load, available *stack*, and the number of *ticks* occupied by each task in execution.
 
 <p align="center">
-  <img src="Imgs/Stats.png" alt="Grafico">
+  <img src="Imgs/Stats.png" alt="Stats">
 </p>
 
 > [!NOTE]
-> La frecuencia de trabajo del sensor de temperatura simulado es de 10 Hz. Mientras que la información se muestra en la terminal a una frecuencia de 0.5 Hz.
+> The simulated temperature sensor frequency is 10 Hz, while the information is displayed in the terminal at a frequency of 0.5 Hz.
